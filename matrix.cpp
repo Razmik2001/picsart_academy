@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 #include <cstring>
 
 bool isDouble(std::string temp)
