@@ -2,14 +2,42 @@
 #include <string>
 #include <vector>
 
-bool isDouble(const std::string& str) {
-    try {
-        std::size_t pos;
-        std::stod(str, &pos);
-        return pos == str.length();  // Check if the entire string was consumed
-    } catch (const std::exception&) {
-        return false;
+#include <cstring>
+
+bool isDouble(std::string temp)
+{
+  int   j;
+  int count;
+  int not_zero = 0;
+  
+  count = 0;
+    j = 0;
+    if (strcmp(temp.c_str(), "0") == 0)
+        return (1);
+    if (temp[j] == '+' || temp[j] == '-')
+        j++;
+    if (j == 1 && (temp[j] == '\0' || temp[j] == '0'))
+        return (0);
+    if (temp[j] == '0' && temp[j + 1] != '\0' && temp[j + 1] != '.') 
+        return (0);
+    while (temp[j])
+    {
+    if (temp[j] > '0' && temp[j] <= '9')
+          not_zero++;
+        if (temp[j] < '0' || temp[j] > '9')
+        {
+            if (temp[j] == '.' && count == 0)
+                count ++;
+        else
+                return (0);
+        }
+     if (temp[j + 1] == '\0' && temp[j] == '.')
+                return (0);
+        j++;
     }
+  if (not_zero == 0)
+    return 0;
+    return (1);
 }
 
 class Cell
