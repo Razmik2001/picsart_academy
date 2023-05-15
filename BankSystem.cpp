@@ -12,10 +12,9 @@ struct Customer
 
 class BankSystem
 {
-	UI m_money;
+	UI m_money = 0;
 	std::vector<Customer> customer;
 public:
-	BankSystem(){m_money = 0;};
 	void add_customer(int money);
 	void withdraw(UI a_n,UI money);//-
 	void deposit(UI a_n,UI money);//+
