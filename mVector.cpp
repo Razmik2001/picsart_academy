@@ -2,7 +2,7 @@
 #include <initializer_list>
 
 
-//works only with base types
+//works only with basic types
 
 template <class T>
 class mVector
