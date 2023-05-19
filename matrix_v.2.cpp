@@ -4,7 +4,7 @@
 #include <cstring>
 #include <memory>
 
-bool isDouble(std::string temp)
+bool isDouble(const std::string& temp)
 {
   int   j;
   int count;
