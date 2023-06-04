@@ -13,12 +13,39 @@ class Material
 {
 protected:
     string title = "NONE";
+    bool isBorrowed = false;
     Material() = default;
 public:
     virtual void getInfo() = 0;
     virtual string getTitle() = 0;
     virtual ~Material() = default;
+    void take();
+    void replace();
 };
+
+void Material::take()
+{
+    if (!isBorrowed)
+    {
+        isBorrowed = true;
+    }
+    else
+    {
+        cout << "This material is not in the library now" << endl;
+    }
+}
+
+void Material::replace()
+{
+    if (isBorrowed)
+    {
+        isBorrowed = false;
+    }
+    else
+    {
+        cout << "This material is now in the library" << endl;
+    }
+}
 
 class Book : public Material
 {
@@ -61,6 +88,14 @@ void Book::getInfo()
     cout << "Publish Year: " << publishYear << endl;
     cout << "Genre: " << genre << endl;
     cout << "Number of Pages: " << numberOfPages << endl;
+    if (!isBorrowed)
+    {
+        cout << "This material is now in the library" << endl; 
+    }
+    else
+    {
+        cout << "This material is not in the library now" << endl;
+    }
 }
 
 class Journal : public Material
@@ -107,7 +142,14 @@ void Journal::getInfo()
     cout << "Volume: " << volume << endl;
     cout << "Issue: " << issue << endl;
     cout << "Publish Year: " << publishYear << endl;
-    cout << "Subject: " << subject << endl;
+    if (!isBorrowed)
+    {
+        cout << "This material is now in the library" << endl; 
+    }
+    else
+    {
+        cout << "This material is not in the library now" << endl;
+    }
 }
 
 class DVD : public Material
@@ -152,7 +194,16 @@ void DVD::getInfo()
     cout << "Release Year: " << releaseYear << endl;
     cout << "Director: " << director << endl;
     cout << "Duration: " << duration << " minutes" << endl;
+    if (!isBorrowed)
+    {
+        cout << "This material is now in the library" << endl; 
+    }
+    else
+    {
+        cout << "This material is not in the library now" << endl;
+    }
 }
+
 
 class Library
 {
@@ -160,26 +211,60 @@ private:
     vector<Material*> materials;
 public:
     Library() = default;
-    void addBook(string T, string A, UI PY, string G, UI NOP)
-    {
-        Material* s = new Book(T, A, PY, G, NOP);
-        materials.push_back(s);
-    }
-    void addJournal(string T, UI V, UI I, UI PY, string S)
-    {
-        Material* s = new Journal(T, V, I, PY, S);
-        materials.push_back(s);
-    }
-    void addDVD(string T, UI RY, string Dir, double Dur)
-    {
-        Material* s = new DVD(T, RY, Dir, Dur);
-        materials.push_back(s);
-    }
+    void addBook(string T, string A, UI PY, string G, UI NOP);
+    void addJournal(string T, UI V, UI I, UI PY, string S);
+    void addDVD(string T, UI RY, string Dir, double Dur);
+    void takeMaterial(string title);
+    void replaceMaterial(string title);
     ~Library();
-    void find(string& title);
+    void find(string title);
 };
 
-void Library::find(string& title)
+void Library::takeMaterial(string title)
+{
+    for (auto it = materials.begin(); it != materials.end(); ++it)
+    {
+        if ((*it)->getTitle() == title)
+        {
+            (*it)->take();
+            return;
+        }
+        cout << "we don't have this material" << endl;
+    }
+}
+
+void Library::replaceMaterial(string title)
+{
+    for (auto it = materials.begin(); it != materials.end(); ++it)
+    {
+        if ((*it)->getTitle() == title)
+        {
+            (*it)->replace();
+            return;
+        }        
+    }
+    cout << "This is not our material" << endl;
+}
+
+void Library::addDVD(string T, UI RY, string Dir, double Dur)
+{
+        Material* s = new DVD(T, RY, Dir, Dur);
+        materials.push_back(s);
+}
+
+void Library::addJournal(string T, UI V, UI I, UI PY, string S)
+{
+        Material* s = new Journal(T, V, I, PY, S);
+        materials.push_back(s);
+}
+
+void Library::addBook(string T, string A, UI PY, string G, UI NOP)
+{
+        Material* s = new Book(T, A, PY, G, NOP);
+        materials.push_back(s);
+}
+
+void Library::find(string title)
 {
     for (auto it = materials.begin(); it != materials.end(); ++it)
     {
@@ -214,6 +299,18 @@ int main()
     cout << "Enter the title of the material you want to find: ";
     cin >> title;
     lib.find(title);
+
+    // Taking and replacing materials
+    cout << "Enter the title of the material you want to take: ";
+    cin >> title;
+    lib.takeMaterial(title);
+
+    cout << "Enter the title of the material you want to replace: ";
+    cin >> title;
+    lib.replaceMaterial(title);
+
+    // Displaying information
+    lib.find("Book");
 
     return 0;
 }
