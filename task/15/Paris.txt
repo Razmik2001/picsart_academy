@@ -1,0 +1,3 @@
+place -> Paris
+price -> 100
+count -> 74

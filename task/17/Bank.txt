@@ -1,0 +1,3 @@
+add type1  2500ml
+add type2  300ml
+sub type1  100ml

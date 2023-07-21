@@ -1,0 +1,3 @@
+Taxist: D
+Car num: 12qa121
+Bill: 13.800000
